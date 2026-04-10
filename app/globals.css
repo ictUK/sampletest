@@ -3,13 +3,22 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --scrollbar-thumb: rgba(148, 163, 184, 0.65);
+  --scrollbar-track: rgba(241, 245, 249, 0.9);
+  --scrollbar-thumb-hover: rgba(100, 116, 139, 0.75);
+}
+
+.dark,
+html.dark {
+  --scrollbar-thumb: rgba(100, 116, 139, 0.55);
+  --scrollbar-track: rgba(15, 23, 42, 0.75);
+  --scrollbar-thumb-hover: rgba(148, 163, 184, 0.6);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-raleway), ui-sans-serif, system-ui, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +28,164 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--font-raleway), ui-sans-serif, system-ui, sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Thin scrollbars (WebKit) — narrow width, theme-matched */
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Hero rotating headline — staggered line rise on each slide */
+@keyframes hero-line-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-line-rise {
+  animation: hero-line-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line-rise {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Testimonials infinite marquee */
+@keyframes testimonial-marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes testimonial-marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.testimonial-marquee-fade {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.testimonial-marquee-left {
+  animation: testimonial-marquee-left 85s linear infinite;
+}
+
+.testimonial-marquee-right {
+  animation: testimonial-marquee-right 85s linear infinite;
+}
+
+.partner-logo-marquee {
+  animation: testimonial-marquee-left 120s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-marquee-left,
+  .testimonial-marquee-right,
+  .partner-logo-marquee {
+    animation: none !important;
+  }
+}
+
+/* Calculator result transition */
+@keyframes calculator-result-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.calculator-result-enter {
+  animation: calculator-result-enter 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Evolution of test automation — staged column entrance */
+@keyframes evolution-gen-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.evolution-gen-col {
+  animation: evolution-gen-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evolution-gen-col {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
